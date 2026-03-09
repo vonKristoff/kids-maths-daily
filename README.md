@@ -6,8 +6,8 @@ There are options for Question component, which will choose difficulty and rando
 
 ```ts
 interface Props {
-    number: number;
-    level?: number;
-    only?: "+" | "-" | "x" | "/";
+    number: number;               // max number in question
+    level?: number;               // difficulty setting (Max 3)
+    only?: "+" | "-" | "x" | "/"; // set question type
 }
 ```
