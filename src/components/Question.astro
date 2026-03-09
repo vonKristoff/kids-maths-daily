@@ -1,0 +1,68 @@
+---
+interface Props {
+    number: number;
+    level?: number;
+    only?: "+" | "-" | "x" | "/";
+}
+const { number, level, only } = Astro.props;
+const operators = ["+", "-", "x", "/"];
+const max = [70, 99, 50, 100];
+const min = [10, 15, 9, 100];
+const index = !!level ? level - 1 : 1;
+const chance = level > 3 ? 0.9 : 1;
+let prime = Math.ceil(Math.random() * max[index]);
+let beta = Math.ceil(Math.random() * min[index]) + 1;
+
+const operator = only
+    ? only
+    : operators[Math.floor(Math.random() * chance * level)];
+if (operator === "/") beta = Math.ceil(Math.random() * 9) + 1;
+if (beta > prime) {
+    let tmp = prime;
+    prime = beta;
+    beta = tmp;
+}
+---
+
+<div class="wrap">
+    <h2>[{number}]</h2>
+    <div class="task">
+        <div class="prime right">
+            <div class="q">{prime}</div>
+        </div>
+        <div class="prime col">
+            <div class="q left">{operator}</div>
+            <div class="q">{beta}</div>
+        </div>
+    </div>
+    <div class="equals"></div>
+</div>
+<style>
+    .wrap {
+        width: 5em;
+        padding: 2em;
+        /* background: #aaa; */
+    }
+    .task {
+        font-size: 2em;
+        letter-spacing: 0.125em;
+    }
+    .col {
+        display: flex;
+        flex-direction: row;
+    }
+    .right {
+        text-align: right;
+    }
+    .prime {
+        margin: 0.5em 0;
+    }
+    .equals {
+        height: 4em;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
+    .left {
+        width: 4em;
+    }
+</style>
